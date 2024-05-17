@@ -1,0 +1,55 @@
+STR: DB "aaabbbccaaabc"
+
+start:
+MOV CX , 13
+MOV SI , OFFSET STR
+MOV DI , OFFSET STR
+CLD
+
+SEARCH1:
+cmp si,13
+je end
+LODS BYTE
+cmp al,0
+je SEARCH1
+mov di ,si
+SEARCH2:
+cmp di , 13
+je SEARCH1
+SCAS BYTE
+JE SKIP
+LOOP SEARCH2
+
+
+SKIP:
+dec di
+ mov byte [DI] ,0
+JMP SEARCH2
+
+end:
+mov cx,13
+MOV SI , OFFSET STR
+MOV DI , OFFSET STR
+LOOP3:
+cmp byte[si],0
+je skip2
+movs byte
+mov bx , si
+dec bl
+cmp bx,0
+je LOOP3
+mov byte [bx],0
+LOOP LOOP3
+jmp e
+
+skip2:
+inc si
+dec cx
+cmp cx , 0
+je e
+jmp LOOP3
+
+e:
+hlt
+
+ 
